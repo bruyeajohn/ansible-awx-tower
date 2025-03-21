@@ -1,0 +1,20 @@
+- name: Configure Login Banner on Cisco Routers
+  hosts: all
+  gather_facts: no
+  connection: network_cli
+  tasks:
+    - name: Set login banner
+      ios_banner:
+        banner: login
+        text: "No unauthorized users allowed"
+        state: present
+
+    - name: Verify banner configuration
+      ios_command:
+        commands:
+          - show running-config | include banner
+      register: banner_output
+
+    - name: Display banner configuration
+      debug:
+        var: banner_output.stdout_lines

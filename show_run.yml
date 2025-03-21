@@ -1,0 +1,14 @@
+- name: Initial Playbook
+  hosts: all
+  gather_facts: no
+  connection: network_cli
+  tasks:
+    - name: Run show run command
+      ios_command:
+        commands:
+          - show run
+      register: sh_run_result
+
+    - name: Debug registered var
+      debug:
+        var: sh_run_result.stdout_lines
