@@ -5,9 +5,9 @@
   tasks:
     - name: Set login banner
       ios_banner:
-        banner: login
-        text: "No unauthorized users allowed"
-        state: present
+        banner: "{{ banner_type }}"
+        text: "{{ banner_text }}"
+        state: "{{ 'present' if enable_banner == 'yes' else 'absent' }}"
 
     - name: Verify banner configuration
       ios_command:
